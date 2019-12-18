@@ -1,8 +1,8 @@
-# Marlin 1.1.9 (Ai3M based) for Anycubic 4Max Pro by alfrank and davidramiro
+# Marlin 1.1.9 (Ai3M based) for Anycubic 4Max Pro
 
 [![Downloads](https://img.shields.io/github/downloads/Poket-Jony/Marlin-A4MaxPro/total.svg?style=flat)](https://github.com/Poket-Jony/Marlin-A4MaxPro/releases) [![Open Issues](https://img.shields.io/github/issues-raw/Poket-Jony/Marlin-A4MaxPro.svg?style=flat)](https://github.com/Poket-Jony/Marlin-A4MaxPro/issues?q=is%3Aopen+is%3Aissue) [![License](https://img.shields.io/github/license/Poket-Jony/Marlin-A4MaxPro.svg?style=flat)](https://github.com/Poket-Jony/Marlin-A4MaxPro/blob/master/LICENSE) [![Latest Release](https://img.shields.io/github/release/Poket-Jony/Marlin-A4MaxPro.svg?style=flat)](https://github.com/Poket-Jony/Marlin-A4MaxPro/releases/latest/) [![Last commit](https://img.shields.io/github/last-commit/Poket-Jony/Marlin-A4MaxPro.svg?style=flat)](https://github.com/Poket-Jony/Marlin-A4MaxPro/commits/)  [![Travis CI](https://api.travis-ci.org/Poket-Jony/Marlin-A4MaxPro.svg?branch=master)](https://travis-ci.org/Poket-Jony/Marlin-A4MaxPro)  
 
-This is a custom version of the [Marlin Firmware](https://github.com/MarlinFirmware/Marlin) for the 4Max Pro based on [davidramiro's Ai3M repo](https://github.com/davidramiro/Marlin-Ai3M) and [alfrank's](https://drucktipps3d.de/forum/topic/anycubic-4max-pro-marlin-1-1-9-firmware-ai3m-basierend/) changes for the Anycubic 4Max Pro. The DWIN TFT screen is based on [derhopp's repo](https://github.com/derhopp/Marlin-with-Anycubic-i3-Mega-TFT) with his remarkable efforts to get this working with the latest versions of Marlin.
+This is a custom version of the [Marlin Firmware](https://github.com/MarlinFirmware/Marlin) for the 4Max Pro based on [davidramiro's Ai3M repo](https://github.com/davidramiro/Marlin-Ai3M) and [alfrank's changes](https://drucktipps3d.de/forum/topic/anycubic-4max-pro-marlin-1-1-9-firmware-ai3m-basierend/) for the Anycubic 4Max Pro. The DWIN TFT screen is based on [derhopp's repo](https://github.com/derhopp/Marlin-with-Anycubic-i3-Mega-TFT) with his remarkable efforts to get this working with the latest versions of Marlin.
 
 **Make sure to take a look at the [Wiki](https://github.com/davidramiro/Marlin-AI3M/wiki/) in [davidramiro's Ai3M repo](https://github.com/davidramiro/Marlin-Ai3M) and also the [FAQ](https://github.com/davidramiro/Marlin-AI3M/wiki/Frequently-Asked-Questions).**
 
@@ -44,8 +44,8 @@ Marlin-Ai3M administrator:
 - David Ramiro [[@davidramiro](https://github.com/davidramiro)]
 
 Marlin-A4MaxPro contributors:
-- [[@alfrank](https://drucktipps3d.de/author/alfrank/)]
-- [[@mpk](https://drucktipps3d.de/forum/topic/anycubic-4max-pro-marlin-1-1-9-firmware-ai3m-basierend/?part=2#postid-63125)]
+- [[@alfrank](https://drucktipps3d.de/forum/profile/alfrank/)]
+- [[@mpk](https://drucktipps3d.de/forum/profile/mpk/)]
 - Jonas Plamann [[@Poket-Jony](https://github.com/Poket-Jony)]
 
 Marlin's administrators:
