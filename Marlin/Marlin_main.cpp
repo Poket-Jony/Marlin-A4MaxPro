@@ -523,6 +523,10 @@ volatile bool wait_for_heatup = true;
 // Making sure this flag can be cleared by the Anycubic display
 volatile bool nozzle_timed_out = false;
 
+bool anycbc_light_enabled = true;
+bool anycbc_print_finished = false;
+bool anycbc_power_off_after_print = true;
+
 // For M0/M1, this flag may be cleared (by M108) to exit the wait-for-user loop
 #if HAS_RESUME_CONTINUE
   volatile bool wait_for_user; // = false;
@@ -779,6 +783,40 @@ void set_current_from_steppers_for_axis(const AxisEnum axis);
 
 void report_current_position();
 void report_current_position_detail();
+
+void (*softwareReset) (void)=0;
+
+void anycbc_setupLED()
+{
+    pinMode(LED_PIN,OUTPUT);
+    WRITE(LED_PIN,LOW);
+}
+void anycbc_Light_CON()
+{
+    if(anycbc_light_enabled){
+        WRITE(LED_PIN,HIGH);
+    } else {
+        WRITE(LED_PIN,LOW);
+    }
+}
+
+void setup_PowerConPin()
+{
+    SET_OUTPUT(POWER_OFF_PIN);
+    WRITE(POWER_OFF_PIN,HIGH);
+}
+void PowerDown()
+{
+  for(unsigned char i=0;i<3;i++)
+  {
+    WRITE(POWER_OFF_PIN,LOW);
+    delay(10);
+    WRITE(POWER_OFF_PIN,HIGH);
+    delay(10);
+  }
+}
+
+
 
 #if ENABLED(DEBUG_LEVELING_FEATURE)
   void print_xyz(const char* prefix, const char* suffix, const float x, const float y, const float z) {
@@ -14876,6 +14914,7 @@ void manage_inactivity(const bool ignore_stepper_queue/*=false*/) {
   #if ENABLED(ANYCUBIC_TFT_MODEL) && ENABLED(ANYCUBIC_FILAMENT_RUNOUT_SENSOR)
   AnycubicTFT.FilamentRunout();
   #endif
+  anycbc_Light_CON();
 
   if (commands_in_queue < BUFSIZE) get_available_commands();
 
@@ -15063,6 +15102,11 @@ void manage_inactivity(const bool ignore_stepper_queue/*=false*/) {
   #endif
 
   planner.check_axes_activity();
+
+  if(anycbc_power_off_after_print && anycbc_print_finished && (thermalManager.degHotend(0)<100)){
+      anycbc_print_finished=0;
+      PowerDown();
+  }
 }
 
 /**
@@ -15224,6 +15268,7 @@ void setup() {
     runout.setup();
   #endif
 
+  setup_PowerConPin();
   setup_killpin();
 
   setup_powerhold();
@@ -15248,6 +15293,8 @@ void setup() {
   #if HAS_DRIVER(TMC2208)
     tmc2208_serial_begin();
   #endif
+
+  anycbc_setupLED();
 
   // Check startup - does nothing if bootloader sets MCUSR to 0
   byte mcu = MCUSR;

@@ -274,6 +274,10 @@ extern volatile bool wait_for_heatup;
 // Making sure this flag can be cleared by the Anycubic display
 extern volatile bool nozzle_timed_out;
 
+extern bool anycbc_light_enabled;
+extern bool anycbc_print_finished;
+extern bool anycbc_power_off_after_print;
+
 #if HAS_RESUME_CONTINUE
   extern volatile bool wait_for_user;
 #endif
@@ -346,6 +350,10 @@ void tool_change(const uint8_t tmp_extruder, const float fr_mm_s=0.0, bool no_mo
 void home_all_axes();
 
 void report_current_position();
+
+extern  void (*softwareReset) (void);
+
+
 
 #if IS_KINEMATIC
   #if ENABLED(HANGPRINTER)

@@ -44,6 +44,9 @@
  *         7 | 11
  */
 
+//AFR 05.08.2019: adapted to 4Max Pro, marked changes with //AFR
+//AFR 30.11.2019: public version for Drucktipps3D
+
 #if !defined(__AVR_ATmega1280__) && !defined(__AVR_ATmega2560__)
   #error "Oops!  Make sure you have 'Arduino Mega' selected from the 'Tools -> Boards' menu."
 #endif
@@ -271,7 +274,8 @@
 // Misc. Functions
 //
 #define SDSS               53
-#define LED_PIN            13
+//AFR was #define LED_PIN            13
+#define LED_PIN            45
 
 #ifndef FILWIDTH_PIN
   #define FILWIDTH_PIN      5   // Analog Input on AUX2

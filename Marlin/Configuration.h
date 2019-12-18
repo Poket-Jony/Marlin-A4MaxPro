@@ -39,6 +39,16 @@
 #define CONFIGURATION_H
 #define CONFIGURATION_H_VERSION 010109
 
+//AFR 05.08.2019: adapted to 4Max Pro, marked changes with //AFR
+//AFR 03.10.2019: optimized feedrate, acceleration and jerk values
+//AFR 03.10.2019: increased heater 0 maxtemp 
+//AFR 04.10.2019: calibrated E-steps and PID for heater 0
+//AFR 30.11.2019: public version for Drucktipps3D
+//AFR 30.11.2019: with E3D thermistor for hotend 0 (#define TEMP_SENSOR_0 5)
+//AFR 30.11.2019: optional hardware change: both printhead fans to stronger
+//AFR 30.11.2019: Sunon MF50151V1-B00U-A99 (DC12V 1.20W)
+
+
 //===========================================================================
 //============================= Getting Started =============================
 //===========================================================================
@@ -310,7 +320,9 @@
  *
  * :{ '0': "Not used", '1':"100k / 4.7k - EPCOS", '2':"200k / 4.7k - ATC Semitec 204GT-2", '3':"Mendel-parts / 4.7k", '4':"10k !! do not use for a hotend. Bad resolution at high temp. !!", '5':"100K / 4.7k - ATC Semitec 104GT-2 (Used in ParCan & J-Head)", '501':"100K Zonestar (Tronxy X3A)", '6':"100k / 4.7k EPCOS - Not as accurate as Table 1", '7':"100k / 4.7k Honeywell 135-104LAG-J01", '8':"100k / 4.7k 0603 SMD Vishay NTCS0603E3104FXT", '9':"100k / 4.7k GE Sensing AL03006-58.2K-97-G1", '10':"100k / 4.7k RS 198-961", '11':"100k / 4.7k beta 3950 1%", '12':"100k / 4.7k 0603 SMD Vishay NTCS0603E3104FXT (calibrated for Makibox hot bed)", '13':"100k Hisens 3950  1% up to 300°C for hotend 'Simple ONE ' & hotend 'All In ONE'", '20':"PT100 (Ultimainboard V2.x)", '51':"100k / 1k - EPCOS", '52':"200k / 1k - ATC Semitec 204GT-2", '55':"100k / 1k - ATC Semitec 104GT-2 (Used in ParCan & J-Head)", '60':"100k Maker's Tool Works Kapton Bed Thermistor beta=3950", '66':"Dyze Design 4.7M High Temperature thermistor", '70':"the 100K thermistor found in the bq Hephestos 2", '71':"100k / 4.7k Honeywell 135-104LAF-J01", '147':"Pt100 / 4.7k", '1047':"Pt1000 / 4.7k", '110':"Pt100 / 1k (non-standard)", '1010':"Pt1000 / 1k (non standard)", '-4':"Thermocouple + AD8495", '-3':"Thermocouple + MAX31855 (only for sensor 0)", '-2':"Thermocouple + MAX6675 (only for sensor 0)", '-1':"Thermocouple + AD595",'998':"Dummy 1", '999':"Dummy 2" }
  */
-#define TEMP_SENSOR_0 5
+//AFR 30.11.2019: type 11 is the original Anycubic thermistor
+//AFR 30.11.2019: Anycubic wrongly configured it as type 5 which is the E3D tube-type
+#define TEMP_SENSOR_0 11
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
@@ -350,7 +362,8 @@
 // When temperature exceeds max temp, your heater will be switched off.
 // This feature exists to protect your hotend from overheating accidentally, but *NOT* from thermistor short/failure!
 // You should use MINTEMP for thermistor short/failure protection.
-#define HEATER_0_MAXTEMP 285
+//AFR was #define HEATER_0_MAXTEMP 285
+#define HEATER_0_MAXTEMP 300
 #define HEATER_1_MAXTEMP 275
 #define HEATER_2_MAXTEMP 275
 #define HEATER_3_MAXTEMP 275
@@ -379,10 +392,15 @@
 
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
-  // i3 Mega stock v5 hotend, 40W heater cartridge (3.6Ω @ 22°C)
-  #define  DEFAULT_Kp 15.94
-  #define  DEFAULT_Ki 1.17
-  #define  DEFAULT_Kd 54.19
+//AFR 4Max Pro, 230 °C
+  #define DEFAULT_Kp 25.29
+  #define DEFAULT_Ki 2.17
+  #define DEFAULT_Kd 73.53
+
+// i3 Mega stock v5 hotend, 40W heater cartridge (3.6Ω @ 22°C)
+//AFR   #define  DEFAULT_Kp 15.94
+//AFR   #define  DEFAULT_Ki 1.17
+//AFR   #define  DEFAULT_Kd 54.19
 
   // Ultimaker
   //#define  DEFAULT_Kp 22.2
@@ -437,9 +455,14 @@
   //#define PID_BED_DEBUG // Sends debug data to the serial port.
 
   //Anycubic i3 Mega Ultrabase (0.9Ω @ 22°C)
-  #define DEFAULT_bedKp 251.78
-  #define DEFAULT_bedKi 49.57
-  #define DEFAULT_bedKd 319.73
+  //AFR #define DEFAULT_bedKp 251.78
+  //AFR #define DEFAULT_bedKi 49.57
+  //AFR #define DEFAULT_bedKd 319.73
+  
+  //AFR Anycubic 4Max Pro Ultrabase at 80 °C
+  #define DEFAULT_bedKp 439.45
+  #define DEFAULT_bedKi 73.49
+  #define DEFAULT_bedKd 656.97
 
   //120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   //from pidautotune
@@ -459,8 +482,8 @@
  *
  * *** IT IS HIGHLY RECOMMENDED TO LEAVE THIS OPTION ENABLED! ***
  */
-#define PREVENT_COLD_EXTRUSION
-#define EXTRUDE_MINTEMP 170
+//AFR #define PREVENT_COLD_EXTRUSION
+//AFR #define EXTRUDE_MINTEMP 170
 
 /**
  * Prevent a single extrusion longer than EXTRUDE_MAXLENGTH.
@@ -516,9 +539,9 @@
 #define USE_XMIN_PLUG
 #define USE_YMIN_PLUG
 #define USE_ZMIN_PLUG
-#define USE_XMAX_PLUG
+//AFR #define USE_XMAX_PLUG
 //#define USE_YMAX_PLUG
-#define USE_ZMAX_PLUG
+//AFR #define USE_ZMAX_PLUG
 
 // Enable pullup for all endstops to prevent a floating state
 #define ENDSTOPPULLUPS
@@ -558,15 +581,15 @@
  */
 #define X_DRIVER_TYPE  TMC2208_STANDALONE // comment out for stock drivers
 #define Y_DRIVER_TYPE  TMC2208_STANDALONE // comment out for stock drivers
-#define Z_DRIVER_TYPE  TMC2208_STANDALONE // comment out for stock drivers
-#define X2_DRIVER_TYPE TMC2208_STANDALONE
-#define Y2_DRIVER_TYPE TMC2208_STANDALONE
-#define Z2_DRIVER_TYPE TMC2208_STANDALONE // comment out for stock drivers
-#define E0_DRIVER_TYPE TMC2208_STANDALONE // comment out for stock drivers
-#define E1_DRIVER_TYPE TMC2208_STANDALONE // comment out for stock drivers
-#define E2_DRIVER_TYPE TMC2208_STANDALONE
-#define E3_DRIVER_TYPE TMC2208_STANDALONE
-#define E4_DRIVER_TYPE TMC2208_STANDALONE
+//AFR #define Z_DRIVER_TYPE  TMC2208_STANDALONE // comment out for stock drivers
+//AFR #define X2_DRIVER_TYPE TMC2208_STANDALONE
+//AFR #define Y2_DRIVER_TYPE TMC2208_STANDALONE
+//AFR #define Z2_DRIVER_TYPE TMC2208_STANDALONE // comment out for stock drivers
+//AFR #define E0_DRIVER_TYPE TMC2208_STANDALONE // comment out for stock drivers
+//AFR #define E1_DRIVER_TYPE TMC2208_STANDALONE // comment out for stock drivers
+//AFR #define E2_DRIVER_TYPE TMC2208_STANDALONE
+//AFR #define E3_DRIVER_TYPE TMC2208_STANDALONE
+//AFR #define E4_DRIVER_TYPE TMC2208_STANDALONE
 
 // Enable this feature if all enabled endstop pins are interrupt-capable.
 // This will remove the need to poll the interrupt pins, saving many CPU cycles.
@@ -614,14 +637,18 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 92.6 }
+//AFR was #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 92.6 }
+//AFR 418 is for genuine E3D Titan extruder 
+//AFR and for Anycubic Clone with original idler arm since the clone one broke
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 100, 80, 800, 445 }
 
 /**
  * Default Max Feed Rate (mm/s)
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 500, 500, 6, 60 }
+//AFR was #define DEFAULT_MAX_FEEDRATE          { 150, 150, 20, 80 }
+#define DEFAULT_MAX_FEEDRATE          { 300, 300, 20, 80 }
 
 /**
  * Default Max Acceleration (change/s) change = mm/s
@@ -629,7 +656,8 @@
  * Override with M201
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 3000, 2000,  60, 10000 }
+//AFR was #define DEFAULT_MAX_ACCELERATION      { 700, 700, 70, 15000 }
+#define DEFAULT_MAX_ACCELERATION      { 2000, 2000, 100, 10000 }
 
 /**
  * Default Acceleration (change/s) change = mm/s
@@ -639,9 +667,12 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          1500    // X, Y, Z and E acceleration for printing moves
+//AFR was #define DEFAULT_ACCELERATION          700
+#define DEFAULT_ACCELERATION          1000    // X, Y, Z and E acceleration for printing moves
+//AFR was #define DEFAULT_RETRACT_ACCELERATION  700
 #define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration for travel (non printing) moves
+//AFR was #define DEFAULT_TRAVEL_ACCELERATION   700
+#define DEFAULT_TRAVEL_ACCELERATION   2000    // X, Y, Z acceleration for travel (non printing) moves
 
 /**
  * Default Jerk (mm/s)
@@ -651,10 +682,14 @@
  * When changing speed and direction, if the difference is less than the
  * value set here, it may happen instantaneously.
  */
-#define DEFAULT_XJERK                 10.0
-#define DEFAULT_YJERK                 10.0
-#define DEFAULT_ZJERK                  0.4
-#define DEFAULT_EJERK                  5.0
+//AFR was #define DEFAULT_XJERK                 8.2
+#define DEFAULT_XJERK                 8.2
+//AFR was #define DEFAULT_YJERK                 8.2
+#define DEFAULT_YJERK                 8.2
+//AFR was #define DEFAULT_ZJERK                 0.2
+#define DEFAULT_ZJERK                 0.2
+//AFR was #define DEFAULT_EJERK                10
+#define DEFAULT_EJERK                 5.0
 
 /**
  * S-Curve Acceleration
@@ -867,7 +902,8 @@
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
 #define INVERT_X_DIR false // set to true for stock drivers or TMC2208 with reversed connectors
 #define INVERT_Y_DIR true // set to false for stock drivers or TMC2208 with reversed connectors
-#define INVERT_Z_DIR true // set to false for stock drivers or TMC2208 with reversed connectors
+//AFR
+#define INVERT_Z_DIR false // set to false for stock drivers or TMC2208 with reversed connectors
 
 // @section extruder
 
@@ -896,11 +932,14 @@
 // @section machine
 
 // The size of the print bed
-#define X_BED_SIZE 215
-#define Y_BED_SIZE 215
+//AFR
+#define X_BED_SIZE 270
+//AFR
+#define Y_BED_SIZE 205
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
-#define X_MIN_POS -5
+//AFR was -5
+#define X_MIN_POS -8
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
@@ -1977,6 +2016,7 @@
 // Enable Anycubic TFT
 #define ANYCUBIC_TFT_MODEL
 #define ANYCUBIC_FILAMENT_RUNOUT_SENSOR
-//#define ANYCUBIC_TFT_DEBUG
+//AFR
+#define ANYCUBIC_TFT_DEBUG
 
 #endif // CONFIGURATION_H

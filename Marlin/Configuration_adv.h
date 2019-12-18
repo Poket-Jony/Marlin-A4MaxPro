@@ -34,6 +34,10 @@
 #define CONFIGURATION_ADV_H
 #define CONFIGURATION_ADV_H_VERSION 010109
 
+//AFR 05.08.2019: adapted to 4Max Pro, marked changes with //AFR
+//AFR 02.10.2019: re-enabled LIN_ADVANCE, calibrated to 0.07
+//AFR 30.11.2019: public version for Drucktipps3D
+
 // @section temperature
 
 //===========================================================================
@@ -260,12 +264,15 @@
 /**
  * M355 Case Light on-off / brightness
  */
+//AFR
 //#define CASE_LIGHT_ENABLE
 #if ENABLED(CASE_LIGHT_ENABLE)
-  //#define CASE_LIGHT_PIN 4                  // Override the default pin if needed
+  //AFR was #define CASE_LIGHT_PIN 4 
+  #define CASE_LIGHT_PIN 45                  // Override the default pin if needed
   #define INVERT_CASE_LIGHT false             // Set true if Case Light is ON when pin is LOW
   #define CASE_LIGHT_DEFAULT_ON true          // Set default power-up state on
-  #define CASE_LIGHT_DEFAULT_BRIGHTNESS 105   // Set default power-up brightness (0-255, requires PWM pin)
+  //AFR was #define CASE_LIGHT_DEFAULT_BRIGHTNESS 105
+  #define CASE_LIGHT_DEFAULT_BRIGHTNESS 255   // Set default power-up brightness (0-255, requires PWM pin)
   //#define MENU_ITEM_CASE_LIGHT              // Add a Case Light option to the LCD main menu
   //#define CASE_LIGHT_USE_NEOPIXEL           // Use Neopixel LED as case light, requires NEOPIXEL_LED.
   #if ENABLED(CASE_LIGHT_USE_NEOPIXEL)
@@ -322,7 +329,7 @@
   #endif
 #endif
 
-#define Z_DUAL_STEPPER_DRIVERS
+//AFR #define Z_DUAL_STEPPER_DRIVERS
 #if ENABLED(Z_DUAL_STEPPER_DRIVERS)
   #define Z_DUAL_ENDSTOPS
   #if ENABLED(Z_DUAL_ENDSTOPS)
@@ -774,9 +781,10 @@
  * See http://marlinfw.org/docs/features/lin_advance.html for full instructions.
  * Mention @Sebastianv650 on GitHub to alert the author of any issues.
  */
+//AFR 
 #define LIN_ADVANCE
 #if ENABLED(LIN_ADVANCE)
-  #define LIN_ADVANCE_K 0  // Unit: mm compression per 1mm/s extruder speed
+  #define LIN_ADVANCE_K 0.07  // Unit: mm compression per 1mm/s extruder speed
   //#define LA_DEBUG          // If enabled, this will generate debug information output over USB.
 #endif
 
